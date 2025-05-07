@@ -1,6 +1,6 @@
 import crawler
-import connectDatabase
-
+import crawledDataDownload
+import gpt_report
 
 
 if __name__=="__main__":
@@ -10,12 +10,21 @@ if __name__=="__main__":
     print(keyword)
     print(type(keyword))
 
+    #1차    
+    if keyword == '':
+        crawler.pageSelenium(keyword)
+    else:
+        crawler.grayhatApi(keyword)
+        crawler.pageSelenium(keyword)
 
-
-    #1차
-    #crawler.pageSelenium(keyword)
-    crawler.grayhatApi(keyword)
+    crawler.crawledPageDataInsert()
+    gpt_report.run_pipeline(keyword)
 
     #2차
+    #crawlerDataDownload.dataDownload()
+    
 
-    #3차nn
+    #3차
+
+
+    #최종
