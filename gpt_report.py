@@ -126,7 +126,7 @@ def run_pipeline(keyword):
     summary_text = get_summary_from_gpt(keyword, df, api_key)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    pdf_path = f"report_{timestamp}.pdf"
+    pdf_path = f"output/report_{timestamp}.pdf"
 
     save_report_to_pdf(pdf_path, summary_text, df)
     print(f"✅ PDF 보고서가 생성되었습니다: {pdf_path}")
