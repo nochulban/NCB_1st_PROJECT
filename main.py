@@ -1,5 +1,4 @@
 import crawler
-import crawledDataDownload
 import gpt_report
 
 
@@ -21,7 +20,6 @@ if __name__=="__main__":
     gpt_report.run_pipeline(keyword)
 
     #2차
-    #crawlerDataDownload.dataDownload()
     
 
     #3차
