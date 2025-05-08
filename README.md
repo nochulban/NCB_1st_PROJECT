@@ -52,3 +52,6 @@ python main.py
 <div align="center">
   <img width="883" alt="스크린샷 2025-05-08 오전 11 23 19" src="https://github.com/user-attachments/assets/5fd3f93e-7c6c-454e-ba66-f9dcf8834eb6" />
 </div>
+
+## 시연 영상
+https://youtu.be/jGol5wmgGyY?si=5GjYbJhN5YIyr8EB
