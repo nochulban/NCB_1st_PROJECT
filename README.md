@@ -34,7 +34,7 @@ ncb/
 └── requirements.txt          # 의존성 목록
 ```
 
-## 실행 방법
+## 실행 방법 (api key 추가 필요)
 ```
 # 가상환경 생성 및 실행
 source venv/bin/activate
