@@ -1,7 +1,7 @@
 # NOCHULBAN (1차 프로젝트)
 ## 공개 출처 정보 API 호출 및 자동화 탐색 기반 클라우드 오브젝트 스토리지 내 문서 유출 탐지 시스템 개발
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/5ceee601-4405-4d10-804b-74fc53fcf1aa" width="500"/>
+  <img src="https://github.com/user-attachments/assets/a3819795-5724-472c-a233-5d41daca6ed9" width="500"/>
 </div>
 
 ![image](https://github.com/user-attachments/assets/a3819795-5724-472c-a233-5d41daca6ed9)
