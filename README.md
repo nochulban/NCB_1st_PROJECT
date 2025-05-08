@@ -21,3 +21,34 @@
 - FPDF
 - OPENAI API (GPT)
 - MySQL
+
+## 디렉터리 구조
+```
+ncb/
+├── /venv                     # 가상환경
+├── main.py                   # 키워드 입력 후 전체 파이프라인 실행
+├── gpt_report.py             # GPT 기반 보고서 자동화
+├── connectDatabase.py        # DB 연결 및 쿼리 처리
+├── crawler.py                # 공개 버킷 크롤러(Grayhat, Selenium)
+├── output/                   # 생성된 보고서 저장 경로
+└── requirements.txt          # 의존성 목록
+```
+
+## 실행 방법
+```
+# 가상환경 생성 및 실행
+source venv/bin/activate
+
+# 패키지 설치
+pip install -r requirements.txt
+
+# 파이프라인 실행
+python main.py
+```
+
+## 데이터베이스 구성
+- buckets : 버킷 메타 정보
+- documents : 파일 메타정보(경로, 해시 등)
+<div align="center">
+  <img width="883" alt="스크린샷 2025-05-08 오전 11 23 19" src="https://github.com/user-attachments/assets/5fd3f93e-7c6c-454e-ba66-f9dcf8834eb6" />
+</div>
