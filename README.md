@@ -3,6 +3,10 @@
 <div align="center">
   <img src="https://github.com/user-attachments/assets/5ceee601-4405-4d10-804b-74fc53fcf1aa" width="500"/>
 </div>
+
+## 프로젝트 개요
+본 프로젝트는 GrayhatWarfare API 및 Selenium을 활용해 공개된 S3 버킷 내 문서를 수집하고, 수집된 문서 목록을 기반으로 유출 가능성이 있는 파일을 자동으로 탐지·기록하는 시스템입니다.
+
 ## 주요 기능
 - S3 버킷 크롤링(GrayhatWarfare API 및 Selenium 기반)
 - 
