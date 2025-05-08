@@ -9,4 +9,15 @@
 
 ## 주요 기능
 - S3 버킷 크롤링(GrayhatWarfare API 및 Selenium 기반)
-- 
+- 특정 키워드 기반 파일 탐색
+- 메타데이터 수집 및 DB 저장
+- 유출 파일 보고서 자동 생성(GPT API 연동)
+- PDF 기반 보고서 생성
+
+## 사용 기술
+- Python 3.10
+- Selenium
+- pymysql
+- FPDF
+- OPENAI API (GPT)
+- MySQL
