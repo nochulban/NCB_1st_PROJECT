@@ -21,35 +21,35 @@ def connectionDataBase():
 #bucketurlSelect
 def getBucketUrl():
     try:
-        cursor = connectionDataBase().cursor() 
+        cus = connectionDataBase().cursor() 
         query = """SELECT bucket_url FROM buckets"""
-        cursor.execute(query)
+        cus.execute(query)
     except pymysql.MySQLError as e:
         print("에러 발생:", e)
 
-    return cursor.fetchall()
+    return cus.fetchall()
 
 
 #bucketAllSelect
 def bucketTableAllSearch():
     try:
-        cursor = connectionDataBase().cursor()
+        cus = connectionDataBase().cursor()
         query = """SELECT * FROM buckets"""
-        cursor.execute(query)
+        cus.execute(query)
 
     except pymysql.MySQLError as e:
         print("에러 발생:", e)
 
-    return cursor.fetchall()
+    return cus.fetchall()
 
 
 #repeatCheck
 def repeatCheck(httpsName):
     try:    
-        cursor = connectionDataBase().cursor() 
+        cus = connectionDataBase().cursor() 
         query = """SELECT COUNT(*) AS cnt FROM project_ncb.buckets WHERE bucket_url = %s"""
-        cursor.execute(query, (httpsName,))
-        duplicate_count = cursor.fetchone() 
+        cus.execute(query, (httpsName,))
+        duplicate_count = cus.fetchone() 
         print(type(duplicate_count))       
         #print(duplicate_count['cnt'])
         countType = ("dict" if str(type(duplicate_count)) == "<class dict>" else "tuple" )
@@ -67,14 +67,14 @@ def repeatCheck(httpsName):
 #TRUNCATE
 def truncateBucketTable():
     try:
-        cursor = connectionDataBase().cursor()
+        cus = connectionDataBase().cursor()
         query = f"TRUNCATE TABLE `buckets`;"
-        cursor.execute(query)
+        cus.execute(query)
 
     except pymysql.MySQLError as e:
         print("에러 발생:", e)
 
-    return cursor.fetchall()
+    return cus.fetchall()
 
 
 
@@ -83,20 +83,20 @@ def bucketUrlInsert(statusCode, count, httpsName):
 
     if statusCode == 200:
         try:
-            cursor = connectionDataBase().cursor()
+            cus = connectionDataBase().cursor()
             query = """INSERT INTO project_ncb.buckets (status_code, connection_state, collected_at, source, file_count, bucket_url)VALUES (%s, %s, %s, %s, %s, %s)"""
             data = (statusCode, '정상', datetime.now().strftime('%Y.%m.%d - %H:%M:%S'),'grayhat', count, httpsName )
-            cursor.execute(query, data)
+            cus.execute(query, data)
             connectionDataBase().commit()
             print("연결 O")
         except pymysql.MySQLError as e:
             print("에러 발생:", e)        
     else:
         try:    
-            cursor = connectionDataBase().cursor()
+            cus = connectionDataBase().cursor()
             query = """INSERT INTO project_ncb.buckets (status_code, connection_state, collected_at, source, file_count, bucket_url)VALUES (%s, %s, %s, %s, %s, %s)"""
             data = (statusCode, '에러', datetime.now().strftime('%Y.%m.%d - %H:%M:%S'),'grayhat', count, httpsName )
-            cursor.execute(query, data)
+            cus.execute(query, data)
             connectionDataBase().commit()
             print("연결 X")
         except pymysql.MySQLError as e:
@@ -113,15 +113,15 @@ def bucketUrlInsert(statusCode, count, httpsName):
 def insertDocuments(data):
     query = """INSERT INTO documents (file_name, url, extension, hash, date, bucket_url,file_size) 
 VALUES (%s, %s, %s, %s, %s, %s, %s)"""
-    cursor = connectionDataBase().cursor()
-    cursor.execute(query, data)
+    cus = connectionDataBase().cursor()
+    cus.execute(query, data)
 
 def fileRepeatCheck(httpsName):
     try:    
-        cursor = connectionDataBase().cursor() 
+        cus = connectionDataBase().cursor() 
         query = """SELECT COUNT(*) AS cnt FROM project_ncb.document WHERE bucket_url = %s"""
-        cursor.execute(query, (httpsName,))
-        duplicate_count = cursor.fetchone() 
+        cus.execute(query, (httpsName,))
+        duplicate_count = cus.fetchone() 
         print(type(duplicate_count))       
         #print(duplicate_count['cnt'])
         countType = ("dict" if str(type(duplicate_count)) == "<class dict>" else "tuple" )
@@ -138,21 +138,21 @@ def fileRepeatCheck(httpsName):
 
 def truncateDocumentsTable():
     try:
-        cursor = connectionDataBase().cursor()
+        cus = connectionDataBase().cursor()
         query = f"TRUNCATE TABLE `documents`;"
-        cursor.execute(query)
+        cus.execute(query)
 
     except pymysql.MySQLError as e:
         print("에러 발생:", e)
 
-    return cursor.fetchall()
+    return cus.fetchall()
 
 
 
 #Report생성 쿼리
 def setDataFrame():
     try:    
-        cursor = connectionDataBase().cursor(pymysql.cursors.DictCursor)
+        cus = connectionDataBase().cursor(pymysql.cursors.DictCursor)
         query = """SELECT 
     bucket_url,
     extension,
@@ -169,8 +169,8 @@ GROUP BY
 ORDER BY 
     bucket_url, 
     extension;"""
-        cursor.execute(query)
-        rows = cursor.fetchall()
+        cus.execute(query)
+        rows = cus.fetchall()
 
     except pymysql.MySQLError as e:
         print("에러 발생:", e)
