@@ -54,4 +54,8 @@ python main.py
 </div>
 
 ## 시연 영상
-https://youtu.be/jGol5wmgGyY?si=5GjYbJhN5YIyr8EB
+<div align="center">
+  <a href="https://youtu.be/jGol5wmgGyY" target="_blank">
+    <img src="https://img.youtube.com/vi/jGol5wmgGyY/0.jpg" alt="YouTube Thumbnail" width="600"/>
+  </a>
+</div>
