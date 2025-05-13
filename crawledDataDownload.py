@@ -30,7 +30,7 @@ prefix = ''  # 빈 문자열로 설정하면 버킷 전체에서 객체를 나�
 
 # 💾 로컬에 저장할 디렉토리
 # linux 버전으로 변경해야함
-local_download_root = '/opt/isolation'  # 원하는 로컬 경로로 변경하세요
+local_download_root = '/opt/test'  # 원하는 로컬 경로로 변경하세요
 #local_download_root = 'D:\Code'  # 원하는 로컬 경로로 변경하세요
 
 # S3에서 해당 prefix 아래의 파일들 가져오기
