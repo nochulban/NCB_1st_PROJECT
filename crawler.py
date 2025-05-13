@@ -28,7 +28,7 @@ def grayhatApi(keyword):
     conn = http.client.HTTPSConnection("buckets.grayhatwarfare.com")
 
     headers = {
-    'Authorization': "Bearer ~~~"
+    'Authorization': f"Bearer {os.getenv('GRAYHAT_API_KEY')}"
     }
     
     encoded_keyword = quote(keyword)
@@ -114,7 +114,7 @@ def pageSelenium(keyword):
     options = webdriver.ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     headers = {"User-Agent": "Mozilla/5.0"}  # 요청 차단 우회용 헤더
-    browser = webdriver.Chrome(options=options)
+    #browser = webdriver.Chrome(options=options)
 
 
     page = 1
@@ -195,9 +195,9 @@ def get_s3_file_list(bucket_url):
         # S3 클라이언트 생성 (AWS 자격 증명 추가)
         s3_client = boto3.client(
             's3',
-            aws_access_key_id = '',
-            aws_secret_access_key= '',
-            region_name=''
+            aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+            region_name=os.getenv("REGION_NAME")
         )
 
         # S3 버킷 이름 추출
@@ -239,7 +239,8 @@ def crawledPageDataInsert():
                 continue
 
 
-            file_hash = sha256(file_name.encode('utf-8')).hexdigest()
+            #file_hash = sha256(file_name.encode('utf-8')).hexdigest()
+            file_hash = '-'
             url = f"{bucket_url}/{file_name}"
             file_size = 0  # 파일 크기는 필요시 S3에서 가져올 수 있음 (파일 정보 추가 가능)
 
