@@ -5,9 +5,12 @@ import connectDatabase
 from fpdf import FPDF
 import os
 from datetime import datetime
-
-api_key = ""   # 👉 OpenAI API 키 입력
+from dotenv import load_dotenv
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+load_dotenv()
+api_key = os.getenv('OPENAPI_KEY')   # 👉 OpenAI API 키 입력
+
 
 # ------------------ GPT로 개요+요약 생성 ------------------
 
@@ -32,8 +35,9 @@ def get_summary_from_gpt(keyword, data_sample, key):
         f"검색 키워드 '{keyword}'를 기반으로 자동화된 보안 점검 시스템을 통해 공개 오브젝트 스토리지 내에서 수집된 유출 의심 파일들을 분석하였습니다. 본 보고서는 수집 대상의 기본 정보, 수집 방식, 탐지 결과를 포함합니다.\n"
         "\n"
         "[탐지 요약]\n"
-        "- 총 탐지 수: {file_count}\n"
-        "- 공개 버킷 수: {bucket_count}\n"
+        "- 총 탐지 수: (자동 계산)\n"
+        "- 고유 문서 수: (자동 계산)\n"
+        "- 공개 버킷 수: (자동 계산)\n"
         "\n"
         "[유출 문서 상세 리스트]\n"
         "각 항목은 한 줄씩 구분하여 다음 형식으로 나열:\n"
@@ -125,7 +129,7 @@ def run_pipeline(keyword):
     summary_text = get_summary_from_gpt(keyword, df, api_key)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    pdf_path = f"output/report_{timestamp}.pdf"
+    pdf_path = f"report_{timestamp}.pdf"
 
     save_report_to_pdf(pdf_path, summary_text, df)
     print(f"✅ PDF 보고서가 생성되었습니다: {pdf_path}")
