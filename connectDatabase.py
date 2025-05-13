@@ -1,13 +1,16 @@
 import pymysql
+import os
 from datetime import datetime
+from dotenv import load_dotenv
 
 #DB 연결 
+load_dotenv()
 
 conn = pymysql.connect(
-    host = '',          # 👉 MySQL 서버 주소
-    user = '',                # 👉 MySQL 사용자명
-    password ='',  # 👉 MySQL 비밀번호
-    database = '',   # 👉 사용할 DB명
+    host = os.getenv('HOST'),          # 👉 MySQL 서버 주소
+    user = os.getenv('USER'),                # 👉 MySQL 사용자명
+    password =os.getenv('PASSWORD'),  # 👉 MySQL 비밀번호
+    database =os.getenv('DATABASE'),   # 👉 사용할 DB명
     charset='utf8mb4',
     autocommit=True
 )
@@ -106,6 +109,16 @@ def bucketUrlInsert(statusCode, count, httpsName):
 
 #documentTable
 #SELECT
+def getDistinctBucketUrl():
+    try:
+        cus = conn.cursor()
+        query = """SELECT DISTINCT bucket_url FROM documents"""
+        cus.execute(query)
+        return cus.fetchall()
+    except pymysql.MySQLError as e:
+        print("에러 발생:", e)
+        return []
+
 
 
 #INSERT
@@ -145,6 +158,24 @@ def truncateDocumentsTable():
         print("에러 발생:", e)
 
     return cus.fetchall()
+
+
+
+def updateFileHash(bucket_url, file_hash):
+    try:
+        cus = conn.cursor()
+        query = """
+            UPDATE documents
+            SET hash = %s
+            WHERE bucket_url = %s
+            """
+        cus.execute(query, (file_hash, bucket_url))
+        cus.commit()
+        print(f"✅ Updated hash for {bucket_url}")
+    except pymysql.MySQLError as e:
+        print("에러 발생:", e)
+    finally:
+        cus.close()
 
 
 
