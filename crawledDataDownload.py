@@ -30,11 +30,11 @@ prefix = ''  # 빈 문자열로 설정하면 버킷 전체에서 객체를 나�
 
 # 💾 로컬에 저장할 디렉토리
 # linux 버전으로 변경해야함
-local_download_root = '/opt/test'  # 원하는 로컬 경로로 변경하세요
+#local_download_root = '/Users/leejaeyoon/ncb'  # 원하는 로컬 경로로 변경하세요
 #local_download_root = 'D:\Code'  # 원하는 로컬 경로로 변경하세요
 
 # S3에서 해당 prefix 아래의 파일들 가져오기
-def dataDownload(url, bucket_name):
+def dataDownload(root, url, bucket_name):
     paginator = s3.get_paginator('list_objects_v2')
     for page in paginator.paginate(Bucket=bucket_name, Prefix=prefix):
         for obj in page.get('Contents', []):
@@ -43,13 +43,17 @@ def dataDownload(url, bucket_name):
                 continue
 
             # 로컬 저장 경로 구성
-            local_path = os.path.join(local_download_root, key)
+            local_path = os.path.join(f'{root}/{bucket_name}', key)
             os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
             print(f'Downloading s3://{bucket_name}/{key} -> {local_path}')
-            s3.download_file(bucket_name, key, local_path)
-            fileHash = get_file_hash(local_path)
-            connectDatabase.updateFileHash(url, fileHash)
+            try:
+                s3.download_file(bucket_name, key, local_path)
+                fileHash = get_file_hash(local_path)
+                connectDatabase.updateFileHash(f'{url}/{key}', fileHash)
+            except Exception as e:
+                print('에러발생', e)
+
 
     print(f"✅ All files downloaded from bucket: {bucket_name}")
 
@@ -61,14 +65,14 @@ def get_file_hash(file_path):
     return sha256_hash.hexdigest()
 
 
-def main():
+def main(root):
     bucket_urls =connectDatabase.getDistinctBucketUrl()
     for url_tuple in bucket_urls:
         url = url_tuple[0]
         bucket_name = url.split('//')[1].split('/')[0].split('.')[0]
         if bucket_name:
             print(f"📦 Processing bucket: {bucket_name}")
-            dataDownload(url, bucket_name)
+            dataDownload(root, url, bucket_name)
             
         else:
             print(f"❌ Invalid bucket URL: {url}")
