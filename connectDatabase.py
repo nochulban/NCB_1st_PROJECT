@@ -167,15 +167,42 @@ def updateFileHash(bucket_url, file_hash):
         query = """
             UPDATE documents
             SET hash = %s
-            WHERE bucket_url = %s
+            WHERE url = %s
             """
         cus.execute(query, (file_hash, bucket_url))
-        cus.commit()
         print(f"✅ Updated hash for {bucket_url}")
     except pymysql.MySQLError as e:
         print("에러 발생:", e)
     finally:
         cus.close()
+
+
+#malicious, normalTable
+def classificationFile(isNormal, url, filename, hash ,extension, maliciousCount, suspiciousCount):
+    if isNormal == True:
+        try:
+            cus = conn.cursor()
+            query = """INSERT INTO project_ncb.normal_docs 
+            (url, filename, sha256_hash, extension, detected_at)
+            VALUES (%s, %s, %s, %s, %s)"""            
+            data = (url, filename, hash, extension, datetime.now().strftime('%Y.%m.%d - %H:%M:%S') )
+            cus.execute(query, data)
+            conn.commit()
+            print("연결 O")
+        except pymysql.MySQLError as e:
+            print("에러 발생:", e)        
+    else:
+        try:    
+            cus = conn.cursor()
+            query = """INSERT INTO project_ncb.malware_docs 
+            (url, filename, sha256_hash, extension, detected_at, malicious_cour,suspicious_col)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)"""                        
+            data = (url, filename, hash, extension, datetime.now().strftime('%Y.%m.%d - %H:%M:%S'), maliciousCount, suspiciousCount )
+            cus.execute(query, data)
+            conn.commit()
+            print("연결 X")
+        except pymysql.MySQLError as e:
+            print("에러 발생:", e)    
 
 
 
@@ -207,4 +234,34 @@ ORDER BY
 
     return rows
 
+def setNormalCount():
+    try:    
+        cus = conn.cursor() 
+        query = """SELECT COUNT(*) AS cnt FROM normal_docs"""
+        cus.execute(query)
+        normalCount = cus.fetchone() 
+        print(type(normalCount))  
+        #print(duplicate_count['cnt'])
+        countType = ("dict" if str(type(normalCount)) == "<class dict>" else "tuple" )
 
+    except pymysql.MySQLError as e:
+        print("에러 발생:", e)
+
+    if countType == "dict":
+        return int(normalCount['cnt'])
+        #linux dict
+    else:
+        return int(normalCount[0])
+        #window Tuple    
+
+def setMaldocDataFrame():
+    try:    
+        cus = conn.cursor(pymysql.cursors.DictCursor)
+        query = """SELECT * FROM malware_docs"""
+        cus.execute(query)
+        rows = cus.fetchall()
+
+    except pymysql.MySQLError as e:
+        print("에러 발생:", e)
+
+    return rows
