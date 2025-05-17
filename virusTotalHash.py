@@ -62,7 +62,7 @@ def scan_all_files_in_directory(directory):
                 if count == 10:
                     print('10회차 횟주 제한 종료')
                     break
-                url = root.split('ncb/')[1]
+                url = root.split('isolation/')[1]
                 extension = file.split('.')[1]
                 file_hash = get_file_hash(file_path)
                 get_report_by_hash(url, file, file_hash,extension)
