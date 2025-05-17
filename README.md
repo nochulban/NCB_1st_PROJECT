@@ -53,10 +53,3 @@ python main.py
 <div align="center">
   <img width="932" alt="스크린샷 2025-05-17 오후 2 57 08" src="https://github.com/user-attachments/assets/8112ddf9-c58d-4f8b-b35d-c65320d0e491" />
 </div>
-
-## 시연 영상
-<div align="center">
-  <a href="https://youtu.be/jGol5wmgGyY" target="_blank">
-    <img src="https://img.youtube.com/vi/jGol5wmgGyY/0.jpg" alt="YouTube Thumbnail" width="600"/>
-  </a>
-</div>
