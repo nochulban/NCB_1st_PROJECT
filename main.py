@@ -1,6 +1,7 @@
 import crawler
 import crawledDataDownload
 import virusTotalHash
+import ocrProcess
 import gpt_report
 
 
@@ -28,6 +29,7 @@ if __name__=="__main__":
     gpt_report.run_pipeline(keyword)
 
     #3차
+    ocrProcess.main(mainroot)
 
 
     #최종
