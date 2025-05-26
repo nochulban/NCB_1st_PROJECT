@@ -176,6 +176,21 @@ def updateFileHash(bucket_url, file_hash):
     finally:
         cus.close()
 
+def updatePersonalInfoTrue(fileName):
+    try:
+        cus = conn.cursor()
+        query = """
+            UPDATE normal_docs
+            SET personal_info = %s 
+            WHERE filename LIKE %s
+            """
+        cus.execute(query, ('true', f"%{fileName}%"))
+        print(f"✅ Updated personalInfo for {fileName}")
+    except pymysql.MySQLError as e:
+        print("에러 발생:", e)
+    finally:
+        cus.close()        
+
 
 #malicious, normalTable
 def classificationFile(isNormal, url, filename, hash ,extension, maliciousCount, suspiciousCount):
