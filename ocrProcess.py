@@ -185,11 +185,11 @@ def main(mainroot):
 
 
 # ===== 실행 =====
-if __name__ == "__main__":
-    mainroot = '/Users/leejaeyoon/opt/isolation'
+#if __name__ == "__main__":
+    #mainroot = '/Users/leejaeyoon/opt/isolation'
     #mainroot = 'D:\\Code\\isolation' 
 
     #scan_documents_for_personal_info(input_directory)
-    convertDoc.convert_documents(mainroot)
-    ocr_documents(mainroot)
+    #convertDoc.convert_documents(mainroot)
+    #ocr_documents(mainroot)
 
